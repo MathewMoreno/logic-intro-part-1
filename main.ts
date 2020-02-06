@@ -1,6 +1,16 @@
 namespace SpriteKind {
     export const Spaceship = SpriteKind.create()
 }
+function change_Score () {
+    info.changeScoreBy(1)
+}
+function gameOver () {
+    game.over(false)
+}
+sprites.onOverlap(SpriteKind.Spaceship, SpriteKind.Enemy, function (sprite, otherSprite) {
+    Spaceship2.destroy()
+    gameOver()
+})
 function Asteroids () {
     Asteroid = sprites.create(img`
 . . . . . . . . . . . . . . . . 
@@ -29,22 +39,12 @@ function Asteroids () {
     }
     Asteroid.vx = 50 + 50 * info.score() + extra_velocity
     if (info.score() <= 20) {
-        controller.moveSprite(Spaceship, 100 - 2 * info.score(), 100 - 2 * info.score())
+        controller.moveSprite(Spaceship2, 100 - 2 * info.score(), 100 - 2 * info.score())
     }
 }
-function gameOver () {
-    game.over(false)
-}
-function change_Score () {
-    info.changeScoreBy(1)
-}
-sprites.onOverlap(SpriteKind.Spaceship, SpriteKind.Enemy, function (sprite, otherSprite) {
-    Spaceship.destroy()
-    gameOver()
-})
 let extra_velocity = 0
 let Asteroid: Sprite = null
-let Spaceship: Sprite = null
+let Spaceship2: Sprite = null
 scene.setBackgroundImage(img`
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
@@ -167,7 +167,7 @@ f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 1 f f f f f f 
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f f 
 `)
-Spaceship = sprites.create(img`
+Spaceship2 = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
@@ -185,9 +185,9 @@ Spaceship = sprites.create(img`
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, SpriteKind.Spaceship)
-controller.moveSprite(Spaceship)
-Spaceship.x = 120
-Spaceship.setFlag(SpriteFlag.StayInScreen, false)
+controller.moveSprite(Spaceship2)
+Spaceship2.x = 120
+Spaceship2.setFlag(SpriteFlag.StayInScreen, true)
 info.setScore(0)
 game.onUpdateInterval(2000, function () {
     change_Score()
